@@ -1,0 +1,149 @@
+{% extends 'layout/base.twig' %}
+
+{% block title %}Tickets - Ticket Management{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% if autoOpenModal %}
+    // Auto-open the create ticket modal
+    openModal('create-ticket-modal');
+    {% endif %}
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="ticket-management" data-testid="ticket-management">
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Ticket Management</h1>
+      <button onclick="openModal('create-ticket-modal')" class="btn btn--primary pad-btn" data-testid="create-ticket-btn">
+        Create New Ticket
+      </button>
+    </div>
+
+    <!-- Ticket Statistics -->
+    <div class="ticket-stats">
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.total }}</span>
+        <span class="stat-label">Total Tickets</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.open }}</span>
+        <span class="stat-label">Open</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.inProgress }}</span>
+        <span class="stat-label">In Progress</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">{{ stats.closed }}</span>
+        <span class="stat-label">Closed</span>
+      </div>
+    </div>
+
+    <!-- Tickets List -->
+    {% if tickets is empty %}
+      <div class="empty-state empty-t-ticket" data-testid="no-tickets-state">
+        <div class="empty-state__icon">🎫</div>
+            <h3>No tickets yet</h3>
+            <p>Create your first ticket to get started with ticket management.</p>
+        <button onclick="openModal('create-ticket-modal')" class="btn btn--primary margin-t pad-btn">
+          Create Your First Ticket
+        </button>
+      </div>
+    {% else %}
+      <div class="tickets-grid">
+        {% for ticket in tickets %}
+          <div class="ticket-card" data-testid="ticket-{{ ticket.id }}">
+            <div class="ticket-card__header">
+              <h3 class="ticket-card__title" data-testid="ticket-title">{{ ticket.title }}</h3>
+              <div class="ticket-card__badges">
+                <span class="status-badge status-badge--{{ ticket.status }}" data-testid="ticket-status">
+                  {{ ticket.status|replace({'_': ' '}) }}
+                </span>
+                <span class="priority-badge priority-badge--{{ ticket.priority }}" data-testid="ticket-priority">
+                  {{ ticket.priority }}
+                </span>
+              </div>
+            </div>
+            <p class="ticket-card__description" data-testid="ticket-description">
+              {{ ticket.description ?? 'No description provided' }}
+            </p>
+            <div class="ticket-card__meta">
+              <span data-testid="ticket-created">
+                Created: {{ ticket.createdAt|date('Y-m-d H:i:s') }}
+              </span>
+            </div>
+            <div class="ticket-card__actions">
+              <button onclick="openEditModal('{{ ticket.id }}')" class="btn btn--secondary btn--small">Edit</button>
+              <button onclick="deleteTicket('{{ ticket.id }}')" class="btn btn--danger btn--small">Delete</button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {# Include the Create Ticket Modal #}
+    {% include 'components/modal.twig' with {
+      'modal_id': 'create-ticket-modal',
+      'title': 'Create New Ticket',
+      'content': '
+        <form action="api/tickets.php" method="POST">
+          <input type="hidden" name="action" value="create">
+          <div class="form-group">
+            <label for="title">Title *</label>
+            <input type="text" id="title" name="title" placeholder="Enter ticket title" required data-testid="title-input">
+          
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Enter ticket description" data-testid="description-input"></textarea>
+          </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="status">Status *</label>
+            <select
+                id="status"
+                name="status"
+      
+                data-testid="status-select"
+            >
+                <option value="open">Open</option>
+                <option value="in_progress">In Progress</option>
+                <option value="closed">Closed</option>
+            </select>
+           
+        </div>
+
+
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority" data-testid="ticket-priority-select">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </div>
+        </div>
+
+        
+          <div class="form-actions">
+            <button type="button" onclick="closeModal(\'create-ticket-modal\')" class="btn btn--secondary">Cancel</button>
+            <button type="submit" class="btn btn--primary" data-testid="submit-ticket-btn">Create Ticket</button>
+          </div>
+        </form>
+      '
+    } %}
+
+
+
+
+
+
+
+
+{% endblock %}

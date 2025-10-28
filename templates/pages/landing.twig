@@ -1,0 +1,60 @@
+{% extends 'layout/base.twig' %}
+
+{% block title %}Home - Ednut Ticket{% endblock %}
+
+{% block content %}
+<div class="landing-page" data-testid="landing-page">
+    <section class="hero" data-testid="hero-section">
+        <div class="decorative-circle decorative-circle--1"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" data-testid="hero-title">
+                    Streamline Your Support with Ednut Ticket
+                </h1>
+                <p class="hero-description" data-testid="hero-description">
+                    The ultimate ticket management solution for teams of all sizes. 
+                    Track, prioritize, and resolve issues efficiently.
+                </p>
+                <div class="hero-actions">
+                    <a 
+                        href="auth.php" 
+                        class="btn btn--secondary"
+                        data-testid="hero-login-btn"
+                    >
+                        Login
+                    </a>
+                    <a 
+                        href="auth.php" 
+                        class="btn btn--primary"
+                        data-testid="hero-get-started-btn"
+                    >
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" data-testid="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Ednut Ticket?</h2>
+            <div class="features-grid">
+                <div class="feature-card" data-testid="feature-card-1">
+                    <h3>Easy Ticket Management</h3>
+                    <p>Create, track, and resolve tickets with our intuitive interface.</p>
+                </div>
+                <div class="feature-card" data-testid="feature-card-2">
+                    <h3>Real-time Updates</h3>
+                    <p>Stay informed with live status updates and notifications.</p>
+                </div>
+                <div class="feature-card" data-testid="feature-card-3">
+                    <h3>Team Collaboration</h3>
+                    <p>Work together seamlessly with your team members.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="decorative-circle decorative-circle--2"></div>
+</div>
+{% endblock %}

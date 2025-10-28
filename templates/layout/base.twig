@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ticket Management{% endblock %}</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="app">
+   {% if current_page in ['dashboard', 'tickets'] %}
+    {% include 'layout/header.twig' %}
+{% endif %}
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% if current_page in ['dashboard', 'tickets'] %}
+    {% include 'layout/footer.twig' %}
+{% endif %}
+    
+    {# Include toast component #}
+    {% include 'components/toast.twig' %}
+
+    {% block scripts %}{% endblock %}
+    
+    {% if current_page is defined or user is defined %}
+        <script src="js/header.js"></script>
+    {% endif %}
+    </div>
+
+    <script>
+function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.add('open');
+        modal.style.display = 'flex'; // or 'block', depending on your CSS
+        document.body.style.overflow = 'hidden'; // prevent scroll if needed
+    }
+}
+
+function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // restore scroll
+    }
+}
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>

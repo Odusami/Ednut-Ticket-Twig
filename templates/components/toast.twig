@@ -1,0 +1,57 @@
+{% if toast %}
+<div 
+    class="toast toast--{{ toast.type }}"
+    data-testid="toast-{{ toast.type }}"
+    id="toast"
+>
+    <div class="toast__content">
+        <span data-testid="toast-message">{{ toast.message }}</span>
+    </div>
+   
+</div>
+{% endif %}
+
+<script>
+function showToast(message, type = 'success') {
+    // Create or update toast element
+    let toast = document.getElementById('toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.className = `toast toast--${type}`;
+        toast.innerHTML = `
+            <div class="toast__content">
+                <span>${message}</span>
+            </div>
+            
+        `;
+        document.body.appendChild(toast);
+    } else {
+        toast.className = `toast toast--${type}`;
+        toast.querySelector('.toast__content span').textContent = message;
+    }
+    
+    // Show toast
+    toast.style.display = 'flex';
+    
+    // Auto hide after 3 seconds
+    setTimeout(hideToast, 3000);
+}
+
+function hideToast() {
+    const toast = document.getElementById('toast');
+    if (toast) {
+        toast.style.display = 'none';
+    }
+}
+
+// Auto-hide existing toast on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const toast = document.getElementById('toast');
+    if (toast) {
+        setTimeout(hideToast, 3000);
+        
+       
+    }
+});
+</script>

@@ -1,0 +1,17 @@
+<div id="{{ modal_id }}" class="modal-overlay" style="display: none;" data-testid="modal-overlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 data-testid="modal-title">{{ title }}</h2>
+            <button
+                class="modal-close"
+                data-testid="modal-close"
+                onclick="closeModal('{{ modal_id }}')"
+            >
+                &times;
+            </button>
+        </div>
+        <div class="modal-content">
+            {{ content|raw }}
+        </div>
+    </div>
+</div>

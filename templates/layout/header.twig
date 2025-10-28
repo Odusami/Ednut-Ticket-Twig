@@ -1,0 +1,59 @@
+<header class="header" data-testid="header">
+    <div class="container">
+        <div class="header-content">
+            <h2 class="logo" data-testid="logo">
+                Ednut Ticket
+            </h2>
+
+            <nav class="nav" id="main-nav">
+                {% if user is defined %}
+                    <a
+                        href="dashboard.php"
+                        class="nav-link {{ current_page == 'dashboard' ? 'active' : '' }}"
+                        data-testid="nav-dashboard"
+                    >
+                        Dashboard
+                    </a>
+                    <a
+                        href="tickets.php"
+                        class="nav-link {{ current_page == 'tickets' ? 'active' : '' }}"
+                        data-testid="nav-tickets"
+                    >
+                        Tickets
+                    </a>
+                    <div class="user-menu">
+                        <span title="{{ user.name }}" data-testid="user-greeting">{{ user.name|first|upper }}</span>
+                        <a
+                            href="api/logout.php"
+                            class="btn btn--secondary"
+                            data-testid="logout-btn"
+                        >
+                            Logout
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="auth.php" class="nav-link" data-testid="nav-auth">
+                        Login
+                    </a>
+                    <a
+                        href="auth.php"
+                        class="btn btn--primary"
+                        data-testid="nav-get-started"
+                    >
+                        Get Started
+                    </a>
+                {% endif %}
+            </nav>
+
+            <button
+                class="mobile-menu-toggle"
+                id="mobile-menu-toggle"
+                data-testid="mobile-menu-toggle"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</header>

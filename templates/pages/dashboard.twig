@@ -1,0 +1,108 @@
+{% extends 'layout/base.twig' %}
+
+{% block title %}Dashboard - Ticket Management{% endblock %}
+
+{% block content %}
+<div class="dashboard" data-testid="dashboard">
+    <div class="container">
+        <div class="dashboard-header">
+            <h1 class="page-title" data-testid="dashboard-title">Dashboard</h1>
+            <p class="page-subtitle">Welcome to your ticket management dashboard</p>
+        </div>
+
+        <div class="stats-grid" data-testid="stats-grid">
+            <div class="stat-card" data-testid="stat-total">
+                <div class="stat-card__content">
+                    <h3 class="stat-card__value">{{ stats.total }}</h3>
+                    <p class="stat-card__label">Total Tickets</p>
+                </div>
+                <div class="stat-card__icon">📋</div>
+            </div>
+
+            <div class="stat-card" data-testid="stat-open">
+                <div class="stat-card__content">
+                    <h3 class="stat-card__value">{{ stats.open }}</h3>
+                    <p class="stat-card__label">Open Tickets</p>
+                </div>
+                <div class="stat-card__icon-size stat-card__icon-open"></div>
+            </div>
+
+            <div class="stat-card" data-testid="stat-in-progress">
+                <div class="stat-card__content">
+                    <h3 class="stat-card__value">{{ stats.inProgress }}</h3>
+                    <p class="stat-card__label">In Progress</p>
+                </div>
+                <div class="stat-card__icon-size stat-card__icon-progress"></div>
+            </div>
+
+            <div class="stat-card" data-testid="stat-closed">
+                <div class="stat-card__content">
+                    <h3 class="stat-card__value">{{ stats.closed }}</h3>
+                    <p class="stat-card__label">Closed Tickets</p>
+                </div>
+                <div class="stat-card__icon-size stat-card__icon-close"></div>
+            </div>
+        </div>
+
+        <div class="quick-actions" data-testid="quick-actions">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="actions-grid">
+                <a href="tickets.php" class="action-card" data-testid="action-manage-tickets">
+                    <div class="action-card__icon">🎫</div>
+                    <h3>Manage Tickets</h3>
+                    <p>View, create, and manage all tickets</p>
+                </a>
+                
+                <a href="tickets.php?create=new" class="action-card" data-testid="action-create-ticket">
+                    <div class="action-card__icon">➕</div>
+                    <h3>Create New Ticket</h3>
+                    <p>Create a new support ticket</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="recent-tickets" data-testid="recent-tickets">
+            <div class="section-header">
+                <h2 class="section-title">Recent Tickets</h2>
+                <a href="tickets.php" class="btn btn--secondary" data-testid="view-all-tickets">
+                    View All
+                </a>
+            </div>
+            
+{% if recentTickets is empty %}
+    <div class="empty-state empty-d-ticket" data-testid="no-tickets-message">
+        <p>No tickets yet. Create your first ticket to get started!</p>
+        <a href="tickets.php" class="btn btn--primary margin-t">
+            Create Ticket
+        </a>
+    </div>
+{% else %}
+    <div class="tickets-list">
+        {% for ticket in recentTickets %}
+            <div class="ticket-card" data-testid="ticket-{{ ticket.id }}">
+                <div class="ticket-card__header">
+                    <h3 class="ticket-card__title" data-testid="ticket-title">{{ ticket.title }}</h3>
+                    <span 
+                        class="status-badge status-badge--{{ ticket.status }}"
+                        data-testid="ticket-status"
+                    >
+                        {{ ticket.status|replace({'_': ' '}) }}
+                    </span>
+                </div>
+                <p class="ticket-card__description" data-testid="ticket-description">
+                    {{ ticket.description|default('No description provided') }}
+                </p>
+                <div class="ticket-card__meta">
+                    <span data-testid="ticket-priority">Priority: {{ ticket.priority }}</span>
+                    <span data-testid="ticket-created">
+                        Created: {{ ticket.createdAt|date('m/d/Y') }}
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

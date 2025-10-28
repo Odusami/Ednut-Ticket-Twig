@@ -1,0 +1,120 @@
+{% extends 'layout/base.twig' %}
+
+{% block title %}{{ isLogin ? 'Login' : 'Sign Up' }} - Ticket Management{% endblock %}
+
+{% block content %}
+<div class="auth-page" data-testid="auth-page">
+    <div class="container">
+        <div class="auth-card">
+            <h1 class="auth-title" data-testid="auth-title">
+                {{ isLogin ? 'Login to Your Account' : 'Create Your Account' }}
+            </h1>
+            
+            {% if errors.general %}
+                <div class="error-message" style="text-align: center; margin-bottom: 1rem;">
+                    {{ errors.general }}
+                </div>
+            {% endif %}
+            
+            <form method="POST" class="auth-form" data-testid="auth-form">
+                <input type="hidden" name="mode" value="{{ isLogin ? 'login' : 'signup' }}">
+                
+                {% if not isLogin %}
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ formData.name }}"
+                            class="{{ errors.name ? 'error' : '' }}"
+                            data-testid="name-input"
+                        />
+                        {% if errors.name %}
+                            <div class="error-message" data-testid="name-error">
+                                {{ errors.name }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ formData.email }}"
+                        class="{{ errors.email ? 'error' : '' }}"
+                        data-testid="email-input"
+                    />
+                    {% if errors.email %}
+                        <div class="error-message" data-testid="email-error">
+                            {{ errors.email }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value="{{ formData.password }}"
+                        class="{{ errors.password ? 'error' : '' }}"
+                        data-testid="password-input"
+                    />
+                    {% if errors.password %}
+                        <div class="error-message" data-testid="password-error">
+                            {{ errors.password }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if not isLogin %}
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value="{{ formData.confirmPassword }}"
+                            class="{{ errors.confirmPassword ? 'error' : '' }}"
+                            data-testid="confirm-password-input"
+                        />
+                        {% if errors.confirmPassword %}
+                            <div class="error-message" data-testid="confirm-password-error">
+                                {{ errors.confirmPassword }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <button 
+                    type="submit" 
+                    class="btn btn--primary btn--full-width"
+                    data-testid="auth-submit-btn"
+                >
+                    {{ isLogin ? 'Login' : 'Sign Up' }}
+                </button>
+            </form>
+
+            <p class="auth-switch">
+                {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
+                <a 
+                    href="auth.php?mode={{ isLogin ? 'signup' : 'login' }}"
+                    class="link-button"
+                    data-testid="auth-switch-btn"
+                >
+                    {{ isLogin ? 'Sign up here' : 'Login here' }}
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="js/auth.js"></script>
+{% endblock %}
