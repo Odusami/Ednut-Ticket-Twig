@@ -14,7 +14,6 @@
   "scripts": {
     "post-install-cmd": [
       "composer dump-autoload"
-    ],
-    "start": "php -S 0.0.0.0:10000 -t public"
+    ]
   }
 }
