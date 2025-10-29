@@ -4,7 +4,7 @@ A robust ticket management web application built with Twig, featuring authentica
 
 ## Live Demo
 
-**[View Live Demo](https://ednut-ticket-twig.onrender.com)**
+**[View Live Demo](https://ednut-ticket-twig.onrender.com/index.php)**
 
 # Features
 
