@@ -4,7 +4,7 @@ A robust ticket management web application built with Twig, featuring authentica
 
 ## Live Demo
 
-**[View Live Demo](https://odusami.github.io/Ednut-Ticket-React/)**
+**[View Live Demo](https://ednut-ticket-twig.onrender.com)**
 
 # Features
 
@@ -55,7 +55,7 @@ A robust ticket management web application built with Twig, featuring authentica
 
 ## Installation Steps
 
-- git clone https://github.com/Odusami/Ednut-Ticket-React.git
+- git clone https://github.com/Odusami/Ednut-Ticket-Twig.git
 - cd Ednut-Ticket-Twig
 
 ## Install dependencies
